@@ -8,11 +8,11 @@ def calculate_leaf_and_page(card_number):
     position_in_leaf = (card_number - 1) % cards_per_leaf + 1
 
     if position_in_leaf <= cards_per_page:
-        page_number = 1  # Front page
+        page_text = "Front page"
     else:
-        page_number = 2  # Back page
+        page_text = "Back page"
 
-    return leaf_number, page_number
+    return leaf_number, page_text
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Find the leaf and page for a given card number.")
@@ -20,4 +20,4 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     leaf, page = calculate_leaf_and_page(args.card_number)
-    print(f"Card number {args.card_number} should be placed in leaf {leaf}, page {page}.")
+    print(f"Card number {args.card_number} should be placed in leaf {leaf}, {page}.")
