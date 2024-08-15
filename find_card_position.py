@@ -16,10 +16,28 @@ def calculate_leaf_page_and_sleeve(card_number):
 
     return leaf_number, page_text, sleeve_position
 
+def generate_table(leaf, page, sleeve):
+    if leaf == 1 and page == "Front page":
+        table = [[" " for _ in range(3)] for _ in range(3)]
+        row, col = divmod(sleeve - 1, 3)
+        table[row][col] = "x"
+        return "\n".join(["|".join(row) for row in table])
+    else:
+        table = [[" " for _ in range(6)] for _ in range(3)]
+        if page == "Front page":
+            row, col = divmod(sleeve - 1, 3)
+            col += 3
+        else:
+            row, col = divmod(sleeve - 1, 3)
+        table[row][col] = "x"
+        return "\n".join(["|".join(row) for row in table])
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Find the leaf, page, and sleeve position for a given card number.")
     parser.add_argument("--card-number", type=int, required=True, help="The card number to find the leaf, page, and sleeve position for.")
     args = parser.parse_args()
 
     leaf, page, sleeve = calculate_leaf_page_and_sleeve(args.card_number)
+    table = generate_table(leaf, page, sleeve)
     print(f"Card number {args.card_number} should be placed in leaf {leaf}, {page}, sleeve position {sleeve}.")
+    print(table)
